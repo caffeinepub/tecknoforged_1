@@ -1,0 +1,298 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   Tecknoforged Design System
+   Industrial | Technical | Authoritative
+   ───────────────────────────────────────────── */
+
+@layer base {
+  :root {
+    --radius: 0.25rem;
+
+    /* Brand palette — Tecknoforged Industrial */
+    /* Primary Dark Blue: #0A1628 ≈ oklch(0.14 0.04 255) */
+    /* Secondary Blue:    #1E3A5F ≈ oklch(0.27 0.07 253) */
+    /* Steel Grey:        #4A5568 ≈ oklch(0.42 0.02 253) */
+    /* Light Grey:        #F7F8FA ≈ oklch(0.98 0.005 253) */
+    /* Orange CTA:        #E8720C ≈ oklch(0.65 0.18 48) */
+    /* Orange Hover:      #D4600A ≈ oklch(0.59 0.17 47) */
+    /* White:             #FFFFFF = oklch(1 0 0) */
+
+    --background:           0.98 0.005 253;
+    --foreground:           0.14 0.04 255;
+    --card:                 1 0 0;
+    --card-foreground:      0.14 0.04 255;
+    --popover:              1 0 0;
+    --popover-foreground:   0.14 0.04 255;
+    --primary:              0.14 0.04 255;
+    --primary-foreground:   1 0 0;
+    --secondary:            0.27 0.07 253;
+    --secondary-foreground: 1 0 0;
+    --muted:                0.95 0.01 253;
+    --muted-foreground:     0.42 0.02 253;
+    --accent:               0.65 0.18 48;
+    --accent-foreground:    1 0 0;
+    --destructive:          0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border:               0.88 0.01 253;
+    --input:                0.88 0.01 253;
+    --ring:                 0.65 0.18 48;
+
+    /* Custom Tecknoforged tokens */
+    --brand-navy:       0.14 0.04 255;
+    --brand-blue:       0.27 0.07 253;
+    --brand-steel:      0.42 0.02 253;
+    --brand-steel-mid:  0.55 0.015 253;
+    --brand-light:      0.98 0.005 253;
+    --brand-orange:     0.65 0.18 48;
+    --brand-orange-dark: 0.59 0.17 47;
+    --brand-dark-steel: 0.20 0.03 255;
+    --brand-charcoal:   0.18 0.035 255;
+
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.145 0 0;
+    --sidebar-primary: 0.205 0 0;
+    --sidebar-primary-foreground: 0.985 0 0;
+    --sidebar-accent: 0.97 0 0;
+    --sidebar-accent-foreground: 0.205 0 0;
+    --sidebar-border: 0.922 0 0;
+    --sidebar-ring: 0.708 0 0;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Mona Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ─── Typography ─────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: 'Cabinet Grotesk', 'Bricolage Grotesque', 'Mona Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .heading-xl {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .heading-lg {
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .heading-md {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .text-technical {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .text-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+/* ─── Brand-specific utility classes ─────────── */
+@layer utilities {
+  .bg-navy     { background-color: oklch(var(--brand-navy)); }
+  .bg-blue-brand { background-color: oklch(var(--brand-blue)); }
+  .bg-steel-dark { background-color: oklch(var(--brand-dark-steel)); }
+  .bg-charcoal { background-color: oklch(var(--brand-charcoal)); }
+  .bg-orange-brand { background-color: oklch(var(--brand-orange)); }
+  .bg-light-brand { background-color: oklch(var(--brand-light)); }
+
+  .text-navy     { color: oklch(var(--brand-navy)); }
+  .text-orange-brand { color: oklch(var(--brand-orange)); }
+  .text-steel    { color: oklch(var(--brand-steel)); }
+  .text-steel-mid { color: oklch(var(--brand-steel-mid)); }
+  .text-light-brand { color: oklch(var(--brand-light)); }
+
+  .border-navy   { border-color: oklch(var(--brand-navy)); }
+  .border-orange-brand { border-color: oklch(var(--brand-orange)); }
+  .border-steel  { border-color: oklch(0.75 0.01 253); }
+
+  .btn-orange {
+    background-color: oklch(var(--brand-orange));
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+  }
+  .btn-orange:hover {
+    background-color: oklch(var(--brand-orange-dark));
+  }
+  .btn-orange:active {
+    transform: scale(0.98);
+  }
+
+  .btn-outline-white {
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.7);
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+  .btn-outline-white:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-color: white;
+  }
+
+  /* Industrial card style */
+  .card-industrial {
+    background: white;
+    border: 1px solid oklch(0.88 0.01 253);
+    border-radius: 0.25rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card-industrial:hover {
+    box-shadow: 0 8px 30px -4px rgba(10, 22, 40, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Section spacing */
+  .section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .container-brand {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Steel texture effect */
+  .steel-texture {
+    background: linear-gradient(
+      135deg,
+      oklch(0.18 0.035 255) 0%,
+      oklch(0.16 0.04 255) 35%,
+      oklch(0.20 0.03 255) 65%,
+      oklch(0.17 0.038 255) 100%
+    );
+  }
+
+  /* Dark section divider */
+  .divider-steel {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, oklch(0.40 0.02 253), transparent);
+  }
+}
+
+/* ─── Scrollbar ──────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(var(--brand-navy));
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(var(--brand-steel));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(var(--brand-orange));
+}
+
+/* ─── Focus visible ──────────────────────────── */
+:focus-visible {
+  outline: 2px solid oklch(var(--brand-orange));
+  outline-offset: 2px;
+}
+
+/* ─── Selection ──────────────────────────────── */
+::selection {
+  background: oklch(var(--brand-orange) / 0.3);
+  color: oklch(var(--brand-navy));
+}
+
+/* ─── Animations ─────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
