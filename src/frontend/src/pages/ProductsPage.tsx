@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronRight, Package } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import { products } from "../data/products";
 
 function FadeIn({
@@ -197,7 +197,8 @@ export default function ProductsPage() {
                   .map((product, i) => (
                     <FadeIn key={product.slug} delay={i * 0.07}>
                       <Link
-                        to={`/products/${product.slug}`}
+                        to="/products/$slug"
+                        params={{ slug: product.slug }}
                         className="group card-industrial overflow-hidden flex flex-col bg-white"
                       >
                         <div className="relative overflow-hidden aspect-video bg-gray-100">

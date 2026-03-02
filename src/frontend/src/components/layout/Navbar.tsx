@@ -1,6 +1,6 @@
+import { Link, useLocation } from "@tanstack/react-router";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { products } from "../../data/products";
 
 export default function Navbar() {
@@ -64,15 +64,14 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="flex flex-col leading-tight group"
+            className="flex items-center group"
             aria-label="Tecknoforged Home"
           >
-            <span className="text-white font-display text-xl font-extrabold tracking-tight group-hover:text-orange-400 transition-colors">
-              TECKNOFORGED
-            </span>
-            <span className="text-[10px] text-blue-300/70 font-medium tracking-[0.12em] uppercase hidden sm:block">
-              Precision Fasteners. Engineered for Strength.
-            </span>
+            <img
+              src="/assets/generated/tecknoforged-logo-f-red-only.dim_400x400.png"
+              alt="Tecknoforged"
+              className="h-10 lg:h-12 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -112,7 +111,8 @@ export default function Navbar() {
                       {products.map((product) => (
                         <Link
                           key={product.slug}
-                          to={`/products/${product.slug}`}
+                          to="/products/$slug"
+                          params={{ slug: product.slug }}
                           className="flex items-center px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 gap-2"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0" />
@@ -182,7 +182,8 @@ export default function Navbar() {
                     {products.map((product) => (
                       <Link
                         key={product.slug}
-                        to={`/products/${product.slug}`}
+                        to="/products/$slug"
+                        params={{ slug: product.slug }}
                         className="flex items-center py-2 px-3 text-sm text-white/60 hover:text-white gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-orange-500" />

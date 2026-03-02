@@ -1,6 +1,12 @@
 import { Toaster } from "@/components/ui/sonner";
+import {
+  Outlet,
+  RouterProvider,
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from "@tanstack/react-router";
 import { AnimatePresence } from "motion/react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import FloatingButtons from "./components/layout/FloatingButtons";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
@@ -15,26 +21,12 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ProductsPage from "./pages/ProductsPage";
 import QualityPage from "./pages/QualityPage";
 
-function AppRoutes() {
-  const location = useLocation();
-
+function RootLayout() {
   return (
     <>
       <Navbar />
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:slug" element={<ProductDetailPage />} />
-          <Route path="/industries" element={<IndustriesPage />} />
-          <Route path="/quality" element={<QualityPage />} />
-          <Route path="/exports" element={<ExportsPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          {/* Fallback to home */}
-          <Route path="*" element={<HomePage />} />
-        </Routes>
+        <Outlet />
       </AnimatePresence>
       <Footer />
       <FloatingButtons />
@@ -43,10 +35,91 @@ function AppRoutes() {
   );
 }
 
+const rootRoute = createRootRoute({
+  component: RootLayout,
+});
+
+const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: HomePage,
+});
+
+const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/about",
+  component: AboutPage,
+});
+
+const productsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/products",
+  component: ProductsPage,
+});
+
+const productDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/products/$slug",
+  component: ProductDetailPage,
+});
+
+const industriesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/industries",
+  component: IndustriesPage,
+});
+
+const qualityRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/quality",
+  component: QualityPage,
+});
+
+const exportsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/exports",
+  component: ExportsPage,
+});
+
+const blogRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/blog",
+  component: BlogPage,
+});
+
+const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/contact",
+  component: ContactPage,
+});
+
+const notFoundRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "*",
+  component: HomePage,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  aboutRoute,
+  productsRoute,
+  productDetailRoute,
+  industriesRoute,
+  qualityRoute,
+  exportsRoute,
+  blogRoute,
+  contactRoute,
+  notFoundRoute,
+]);
+
+const router = createRouter({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
 export default function App() {
-  return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }

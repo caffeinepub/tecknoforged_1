@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { Car, ChevronRight, Cpu, Settings, Zap } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import { products } from "../data/products";
 
 function FadeIn({
@@ -226,7 +226,8 @@ export default function IndustriesPage() {
                     return (
                       <Link
                         key={slug}
-                        to={`/products/${slug}`}
+                        to="/products/$slug"
+                        params={{ slug }}
                         className="text-xs font-semibold bg-orange-50 border border-orange-200 text-orange-700 px-3 py-1.5 rounded hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors"
                       >
                         {p.name}
@@ -236,7 +237,7 @@ export default function IndustriesPage() {
                 </div>
 
                 <Link
-                  to="/rfq"
+                  to="/contact"
                   className="btn-orange text-sm px-5 py-2.5 inline-flex"
                 >
                   Request Quote for {ind.name}
@@ -256,7 +257,7 @@ export default function IndustriesPage() {
               Serving Your Industry with Precision Fasteners
             </h2>
             <div className="flex flex-wrap justify-center gap-4 mt-6">
-              <Link to="/rfq" className="btn-orange">
+              <Link to="/contact" className="btn-orange">
                 Submit RFQ
               </Link>
               <Link to="/products" className="btn-outline-white">

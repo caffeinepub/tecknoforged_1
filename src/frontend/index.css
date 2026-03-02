@@ -231,6 +231,50 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, oklch(0.40 0.02 253), transparent);
   }
+
+  .btn-outline-red {
+    background-color: transparent;
+    color: #dc2626;
+    border: 2px solid #dc2626;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+  .btn-outline-red:hover {
+    background-color: #fef2f2;
+    border-color: #b91c1c;
+    color: #b91c1c;
+  }
+
+  .btn-red {
+    background-color: #dc2626;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+  }
+  .btn-red:hover {
+    background-color: #b91c1c;
+  }
+  .btn-red:active {
+    transform: scale(0.98);
+  }
 }
 
 /* ─── Scrollbar ──────────────────────────────── */

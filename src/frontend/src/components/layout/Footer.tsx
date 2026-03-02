@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
 import { products } from "../../data/products";
 
 export default function Footer() {
@@ -13,12 +13,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-4">
-              <div className="text-white font-display text-2xl font-extrabold tracking-tight mb-1">
-                TECKNOFORGED
-              </div>
-              <div className="text-[10px] text-blue-300/60 font-medium tracking-[0.12em] uppercase">
-                Precision Fasteners. Engineered for Strength.
-              </div>
+              <img
+                src="/assets/generated/tecknoforged-logo-f-red-only.dim_400x400.png"
+                alt="Tecknoforged"
+                className="h-12 w-auto object-contain"
+              />
             </div>
             <p className="text-sm text-white/50 leading-relaxed mb-4">
               ISO-certified industrial fastener manufacturer in Mumbai since
@@ -84,7 +83,8 @@ export default function Footer() {
               {products.map((product) => (
                 <li key={product.slug}>
                   <Link
-                    to={`/products/${product.slug}`}
+                    to="/products/$slug"
+                    params={{ slug: product.slug }}
                     className="text-sm text-white/50 hover:text-orange-400 transition-colors flex items-center gap-1.5"
                   >
                     <span className="w-1 h-1 rounded-full bg-orange-500/60" />

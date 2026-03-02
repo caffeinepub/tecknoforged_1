@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { Factory, FlaskConical, Quote, Shield, Wrench } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 
 function FadeIn({
   children,
@@ -278,7 +278,7 @@ export default function AboutPage() {
               Ready to Partner with a Trusted Fastener Manufacturer?
             </h2>
             <div className="flex flex-wrap justify-center gap-4 mt-6">
-              <Link to="/rfq" className="btn-orange">
+              <Link to="/contact" className="btn-orange">
                 Request a Quote
               </Link>
               <Link to="/contact" className="btn-outline-white">

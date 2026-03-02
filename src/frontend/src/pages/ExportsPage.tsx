@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { CheckCircle, FileText, Globe, Package, Truck } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 
 function FadeIn({
   children,
@@ -315,7 +315,7 @@ export default function ExportsPage() {
               Ready to Source Fasteners from India's Trusted Exporter?
             </h2>
             <div className="flex flex-wrap justify-center gap-4 mt-6">
-              <Link to="/rfq" className="btn-orange">
+              <Link to="/contact" className="btn-orange">
                 Submit Export RFQ
               </Link>
               <Link to="/contact" className="btn-outline-white">

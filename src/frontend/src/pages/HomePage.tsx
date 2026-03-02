@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   Award,
   Car,
@@ -16,7 +17,6 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { products } from "../data/products";
 import { useBackend } from "../hooks/useBackend";
 
@@ -192,18 +192,17 @@ export default function HomePage() {
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url(/assets/generated/hero-home-screws.dim_1920x1080.jpg)",
+              "url(/assets/generated/hero-ai-manufacturing.dim_1600x900.jpg)",
           }}
         />
-        {/* Dark overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628] via-[#0A1628]/90 to-[#1E3A5F]/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0A1628]/50" />
+        {/* White overlay — fades from opaque white on the left to transparent on the right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/40" />
 
         <div className="relative container-brand pt-28 pb-20">
           <motion.div
@@ -212,20 +211,20 @@ export default function HomePage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 border border-orange-500/40 bg-orange-500/10 text-orange-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 border border-red-600/30 bg-red-50 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 tracking-wide">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
               ISO Certified Manufacturer Since 1976
             </div>
 
             {/* H1 */}
-            <h1 className="heading-xl text-white mb-5 max-w-3xl">
+            <h1 className="heading-xl text-gray-900 mb-5 max-w-3xl">
               Precision Fasteners.{" "}
-              <span className="text-orange-400">Engineered for</span> Industrial
+              <span className="text-red-600">Engineered for</span> Industrial
               Strength.
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg text-blue-100/80 mb-8 max-w-2xl leading-relaxed font-light">
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl leading-relaxed font-light">
               India's trusted bulk fastener manufacturer supplying OEM-grade
               screws, bolts, rivets & washers to automobile, electrical and
               electronics industries. Mumbai-based. Export-ready.
@@ -235,22 +234,19 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4 mb-10">
               <a
                 href="tel:+919870090508"
-                className="btn-outline-white text-base px-7 py-3.5"
+                className="btn-outline-red text-base px-7 py-3.5"
               >
                 <Phone size={18} />
                 Call: +91 9870090508
               </a>
-              <Link
-                to="/products"
-                className="btn-orange text-base px-7 py-3.5 shadow-orange"
-              >
+              <Link to="/products" className="btn-red text-base px-7 py-3.5">
                 View Products
                 <ChevronRight size={18} />
               </Link>
             </div>
 
             {/* Trust row */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold tracking-widest uppercase text-blue-200/60">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold tracking-widest uppercase text-gray-400">
               {[
                 "ISO Certified",
                 "Since 1976",
@@ -259,7 +255,7 @@ export default function HomePage() {
                 "Grade 8.8 / 10.9",
               ].map((item, i) => (
                 <span key={item} className="flex items-center gap-3">
-                  {i > 0 && <span className="text-blue-200/30">|</span>}
+                  {i > 0 && <span className="text-gray-300">|</span>}
                   {item}
                 </span>
               ))}
@@ -268,7 +264,7 @@ export default function HomePage() {
         </div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0f1e35] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white/80 to-transparent" />
       </section>
 
       {/* ── STATS BAR ─────────────────────────────────────────── */}
@@ -319,7 +315,8 @@ export default function HomePage() {
             {products.map((product, i) => (
               <FadeInSection key={product.slug} delay={i * 0.04}>
                 <Link
-                  to={`/products/${product.slug}`}
+                  to="/products/$slug"
+                  params={{ slug: product.slug }}
                   className="group card-industrial overflow-hidden flex flex-col"
                 >
                   <div className="relative overflow-hidden aspect-square bg-gray-100">

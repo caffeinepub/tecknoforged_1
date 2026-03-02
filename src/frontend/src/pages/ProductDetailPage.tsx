@@ -1,12 +1,12 @@
+import { Link, Navigate, useParams } from "@tanstack/react-router";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
 import { getProductBySlug } from "../data/products";
 
 export default function ProductDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const product = slug ? getProductBySlug(slug) : undefined;
+  const { slug } = useParams({ strict: false });
+  const product = slug ? getProductBySlug(slug as string) : undefined;
 
   useEffect(() => {
     if (product) {
@@ -16,7 +16,7 @@ export default function ProductDetailPage() {
   }, [product]);
 
   if (!product) {
-    return <Navigate to="/products" replace />;
+    return <Navigate to="/products" />;
   }
 
   return (

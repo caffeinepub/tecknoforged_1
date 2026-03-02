@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   Award,
   CheckCircle,
@@ -9,7 +10,6 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 
 function FadeIn({
   children,
@@ -345,7 +345,7 @@ export default function QualityPage() {
               All orders include full test certificates, dimensional reports,
               and material traceability documentation.
             </p>
-            <Link to="/rfq" className="btn-orange">
+            <Link to="/contact" className="btn-orange">
               Submit RFQ
             </Link>
           </FadeIn>
