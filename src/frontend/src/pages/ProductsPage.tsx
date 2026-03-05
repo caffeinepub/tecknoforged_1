@@ -34,12 +34,12 @@ const categories = Array.from(new Set(products.map((p) => p.category)));
 const screwTypes = [
   {
     name: "Self Tapping Screws",
-    image: "/assets/generated/screw-self-tapping.dim_600x600.jpg",
+    image: "/assets/uploads/image-1.png",
     desc: "Cut threads into sheet metal and plastic without pre-drilling",
   },
   {
     name: "Self Drilling Screws",
-    image: "/assets/generated/screw-self-drilling.dim_600x600.jpg",
+    image: "/assets/uploads/image-2-2.png",
     desc: "Drill and tap in one operation for structural steel applications",
   },
   {
@@ -49,7 +49,7 @@ const screwTypes = [
   },
   {
     name: "Button Head Screws",
-    image: "/assets/generated/screw-button-head.dim_600x600.jpg",
+    image: "/assets/uploads/image-3-3.png",
     desc: "Low-profile dome head for visible, aesthetic installations",
   },
   {
