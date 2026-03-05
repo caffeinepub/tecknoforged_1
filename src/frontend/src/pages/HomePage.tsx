@@ -218,9 +218,8 @@ export default function HomePage() {
 
             {/* H1 */}
             <h1 className="heading-xl text-gray-900 mb-5 max-w-3xl">
-              Precision Fasteners.{" "}
-              <span className="text-red-600">Engineered for</span> Industrial
-              Strength.
+              Tecknoforged. <span className="text-red-600">Engineered for</span>{" "}
+              Industrial Strength.
             </h1>
 
             {/* Subheadline */}
@@ -367,7 +366,7 @@ export default function HomePage() {
               </p>
               <h2 className="heading-lg text-navy mb-3">Industries We Serve</h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Delivering precision fasteners to the most demanding industrial
+                Delivering quality fasteners to the most demanding industrial
                 sectors
               </p>
             </div>

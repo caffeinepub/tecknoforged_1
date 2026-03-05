@@ -14,9 +14,9 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-4">
               <img
-                src="/assets/generated/tecknoforged-logo-f-red-only.dim_400x400.png"
+                src="/assets/uploads/ChatGPT-Image-Mar-2-2026-03_39_03-PM-1.png"
                 alt="Tecknoforged"
-                className="h-12 w-auto object-contain"
+                className="h-20 w-auto object-contain"
               />
             </div>
             <p className="text-sm text-white/50 leading-relaxed mb-4">

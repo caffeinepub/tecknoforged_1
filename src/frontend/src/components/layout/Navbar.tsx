@@ -60,7 +60,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container-brand">
-        <div className="flex items-center justify-between h-16 lg:h-18">
+        <div className="flex items-center justify-between h-20 lg:h-20">
           {/* Logo */}
           <Link
             to="/"
@@ -68,9 +68,9 @@ export default function Navbar() {
             aria-label="Tecknoforged Home"
           >
             <img
-              src="/assets/generated/tecknoforged-logo-f-red-only.dim_400x400.png"
+              src="/assets/uploads/ChatGPT-Image-Mar-2-2026-03_39_03-PM-1.png"
               alt="Tecknoforged"
-              className="h-10 lg:h-12 w-auto object-contain"
+              className="h-14 lg:h-16 w-auto object-contain"
             />
           </Link>
 
