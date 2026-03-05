@@ -12,12 +12,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-4">
+            <div className="mb-4 flex items-center gap-3">
               <img
                 src="/assets/uploads/ChatGPT-Image-Mar-2-2026-03_39_03-PM-1.png"
-                alt="Tecknoforged"
-                className="h-20 w-auto object-contain"
+                alt="Tecknoforged logo"
+                className="h-14 w-auto object-contain flex-shrink-0"
               />
+              <div className="flex flex-col leading-tight">
+                <span className="text-white font-bold text-lg tracking-wide">
+                  TECKNOFORGED
+                </span>
+                <span className="text-white/40 text-[10px] font-medium tracking-widest uppercase">
+                  Precision Fastener Manufacturers
+                </span>
+              </div>
             </div>
             <p className="text-sm text-white/50 leading-relaxed mb-4">
               ISO-certified industrial fastener manufacturer in Mumbai since

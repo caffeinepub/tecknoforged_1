@@ -26,14 +26,10 @@ interface RFQFormData {
 }
 
 const productTypes = [
-  "Self Tapping Screws",
-  "Self Drilling Screws",
   "Allen Cap Screws",
   "Hex Flange Bolts",
   "Rivets",
   "Washers",
-  "BT Cut Screws",
-  "Hi-Low Screws",
   "Button Head Screws",
   "Flange Head Screws",
   "Other / Custom",

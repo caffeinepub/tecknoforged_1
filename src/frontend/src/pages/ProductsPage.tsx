@@ -2,7 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight, Package } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
+import ScrewPreview3D from "../components/ScrewPreview3D";
 import { products } from "../data/products";
+import { hasNamedPreview, nameToScrewType } from "../lib/screwGeometry";
 
 function FadeIn({
   children,
@@ -33,14 +35,9 @@ const categories = Array.from(new Set(products.map((p) => p.category)));
 
 const screwTypes = [
   {
-    name: "Self Tapping Screws",
-    image: "/assets/uploads/image-1.png",
-    desc: "Cut threads into sheet metal and plastic without pre-drilling",
-  },
-  {
     name: "Self Drilling Screws",
-    image: "/assets/uploads/image-2-2.png",
-    desc: "Drill and tap in one operation for structural steel applications",
+    image: "/assets/uploads/item-phil-flat-sds-blk__54303-1-1.jpg",
+    desc: "Drill-point tip for direct fastening into metal without pre-drilling",
   },
   {
     name: "Allen Cap Screws",
@@ -68,16 +65,37 @@ const screwTypes = [
     desc: "Flat and spring washers for load distribution and vibration resistance",
   },
   {
-    name: "Hi-Low Screws",
-    image: "/assets/generated/screw-hi-low.dim_600x600.jpg",
-    desc: "Dual-thread geometry for superior pull-out in plastics",
+    name: "Nylock Nuts",
+    image:
+      "/assets/uploads/nyloc-nut-m6_hub1092eb01ee6ec83a4e5197484c145c2_37704_1000x1000_resize_q85_box-1.jpg",
+    desc: "Nylon insert lock nuts for vibration-resistant joints, M3–M20",
+  },
+  {
+    name: "PT Screws",
+    image: "/assets/uploads/VBT-PT-EJOT-PT-Pos1-500Wx500H-1-2.png",
+    desc: "Thread-forming trilobular screws for direct assembly into thermoplastics",
+  },
+  {
+    name: "Torx Screws",
+    image: "/assets/uploads/41n-VIBCdrL._AC_UF1000-1000_QL80_-1-1.jpg",
+    desc: "6-point star drive for cam-out-free, high-torque fastening",
+  },
+  {
+    name: "BT Cut Screws",
+    image: "/assets/uploads/product-jpeg-4.jpg",
+    desc: "Thread-cutting fasteners for plastics, die-cast metals, and soft alloys",
+  },
+  {
+    name: "Taptite Screws",
+    image: "/assets/uploads/4943e27c833539659ab8221f61096f4d.thumb-2-1.webp",
+    desc: "Thread-rolling trilobular screws for cold-formed, vibration-resistant joints in metal",
   },
 ];
 
 export default function ProductsPage() {
   useEffect(() => {
     document.title =
-      "Industrial Fasteners | Self Tapping Screws, Allen Cap Bolts | Tecknoforged Mumbai";
+      "Industrial Fasteners | Allen Cap Screws, Hex Flange Bolts | Tecknoforged Mumbai";
   }, []);
 
   return (
@@ -115,7 +133,7 @@ export default function ProductsPage() {
             {[
               ["10", "Product Categories"],
               ["500+", "Variants Available"],
-              ["M3–M24", "Size Range"],
+              ["M3–M10", "Size Range"],
               ["4.6–12.9", "Grade Range"],
             ].map(([val, label]) => (
               <div key={label} className="text-center">
@@ -143,35 +161,67 @@ export default function ProductsPage() {
                 Types of Screws We Manufacture
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                From self-tapping to precision hex socket — every fastener type
-                engineered for industrial performance
+                From precision hex socket to rivets and washers — every fastener
+                type engineered for industrial performance
+              </p>
+              <p className="text-xs text-orange-600/70 mt-2 font-medium">
+                ✦ Cards marked 3D support interactive rotation
               </p>
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {screwTypes.map((item, i) => (
-              <FadeIn key={item.name} delay={i * 0.06}>
-                <div className="group card-industrial overflow-hidden flex flex-col bg-white hover:shadow-md transition-shadow duration-300">
-                  <div className="aspect-square overflow-hidden bg-gray-50">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            {screwTypes.map((item, i) => {
+              const has3D = hasNamedPreview(item.name);
+              const screwType = has3D ? nameToScrewType[item.name] : null;
+
+              return (
+                <FadeIn key={item.name} delay={i * 0.06}>
+                  <div
+                    className="group card-industrial overflow-hidden flex flex-col bg-white hover:shadow-md transition-shadow duration-300"
+                    data-ocid={`products.gallery.item.${i + 1}`}
+                  >
+                    {/* Image / 3D Preview area */}
+                    <div className="aspect-square overflow-hidden bg-gray-50 relative">
+                      {has3D && screwType ? (
+                        <>
+                          {/* Dark bg for metal to look good */}
+                          <div className="absolute inset-0 bg-[#0d1b2e]" />
+                          <div className="absolute inset-0">
+                            <ScrewPreview3D
+                              screwType={screwType}
+                              finish="stainless"
+                              interactive={false}
+                              className="w-full h-full"
+                            />
+                          </div>
+                          {/* 3D badge */}
+                          <span className="absolute top-2 right-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 pointer-events-none">
+                            3D
+                          </span>
+                        </>
+                      ) : (
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+
+                    <div className="p-4">
+                      <h3 className="font-bold text-navy text-sm mb-1.5 leading-tight">
+                        {item.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-navy text-sm mb-1.5 leading-tight">
-                      {item.name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
+                </FadeIn>
+              );
+            })}
           </div>
         </div>
       </section>

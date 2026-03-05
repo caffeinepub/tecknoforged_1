@@ -1,8 +1,10 @@
 import { Link, Navigate, useParams } from "@tanstack/react-router";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { ArrowLeft, Box, CheckCircle, Rotate3D } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect } from "react";
+import ScrewPreview3D from "../components/ScrewPreview3D";
 import { getProductBySlug } from "../data/products";
+import { has3DPreview, slugToScrewType } from "../lib/screwGeometry";
 
 export default function ProductDetailPage() {
   const { slug } = useParams({ strict: false });
@@ -18,6 +20,10 @@ export default function ProductDetailPage() {
   if (!product) {
     return <Navigate to="/products" />;
   }
+
+  const productSlug = slug as string;
+  const showPreview = has3DPreview(productSlug);
+  const screwType = showPreview ? slugToScrewType[productSlug] : null;
 
   return (
     <main className="pt-16">
@@ -37,6 +43,7 @@ export default function ProductDetailPage() {
             <Link
               to="/products"
               className="inline-flex items-center gap-1.5 text-blue-300/70 hover:text-white text-sm mb-6 transition-colors"
+              data-ocid="product_detail.back.link"
             >
               <ArrowLeft size={14} />
               Back to Products
@@ -48,6 +55,12 @@ export default function ProductDetailPage() {
               <span className="bg-white/10 text-white/70 text-xs font-medium px-3 py-1 rounded uppercase tracking-widest">
                 {product.category}
               </span>
+              {showPreview && (
+                <span className="bg-red-600/20 text-red-400 border border-red-600/40 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1.5">
+                  <Box size={11} />
+                  3D Interactive Preview
+                </span>
+              )}
             </div>
             <h1 className="heading-xl text-white mb-4">{product.name}</h1>
             <p className="text-blue-200/70 mb-6 text-lg font-light">
@@ -61,14 +74,51 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Main content */}
           <div className="lg:col-span-2 flex flex-col gap-10">
-            {/* Product image */}
-            <div className="rounded overflow-hidden border border-border aspect-video bg-gray-100">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {/* Product image or 3D viewer */}
+            {showPreview && screwType ? (
+              <div data-ocid="product_detail.canvas_target">
+                {/* 3D Viewer */}
+                <div
+                  className="rounded-xl overflow-hidden border border-[#1a2e4a] bg-[#0d1b2e]"
+                  style={{ height: "420px" }}
+                >
+                  <ScrewPreview3D
+                    screwType={screwType}
+                    finish="stainless"
+                    interactive={true}
+                    className="w-full h-full"
+                  />
+                </div>
+
+                {/* Label + Configure CTA */}
+                <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <p className="text-sm text-muted-foreground flex items-center gap-1.5">
+                    <Rotate3D
+                      size={14}
+                      className="text-red-500 flex-shrink-0"
+                    />
+                    Interactive 3D Preview — Drag to rotate
+                  </p>
+                  <Link
+                    to="/configurator"
+                    search={{ type: screwType }}
+                    className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded-lg transition-all duration-200 shadow-sm shadow-red-600/30 flex-shrink-0"
+                    data-ocid="product_detail.configurator.primary_button"
+                  >
+                    <Box size={14} />
+                    Configure in 3D
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="rounded overflow-hidden border border-border aspect-video bg-gray-100">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
             {/* Description */}
             <section>
@@ -151,7 +201,23 @@ export default function ProductDetailPage() {
 
           {/* Sidebar — Contact */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-24 flex flex-col gap-4">
+              {/* Configure in 3D CTA (sidebar) */}
+              {showPreview && screwType && (
+                <Link
+                  to="/configurator"
+                  search={{ type: screwType }}
+                  className="flex items-center justify-center gap-2 bg-[#0d1b2e] hover:bg-[#112237] border border-[#1a3050] hover:border-red-600/40 text-white text-sm font-semibold px-4 py-3 rounded-lg transition-all duration-200 group"
+                  data-ocid="product_detail.sidebar.configurator.primary_button"
+                >
+                  <Box
+                    size={15}
+                    className="text-red-500 group-hover:scale-110 transition-transform"
+                  />
+                  Open in 3D Configurator
+                </Link>
+              )}
+
               {/* Contact card */}
               <div className="border border-border rounded p-5 bg-light-brand">
                 <p className="text-xs font-semibold text-navy mb-2">

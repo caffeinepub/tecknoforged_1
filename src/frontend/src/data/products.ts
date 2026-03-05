@@ -19,39 +19,10 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    slug: "self-tapping-screws",
-    name: "Self Tapping Screws",
-    shortSpec: "M3–M14, various drives",
-    image: "/assets/generated/screw-self-tapping.dim_600x600.jpg",
-    category: "Screws",
-    description: [
-      "Tecknoforged self tapping screws are precision cold-forged fasteners engineered to cut their own threads into substrate materials including sheet metal, plastic, and thin-section components. Manufactured to international dimensional standards, they eliminate the need for pre-threading and reduce assembly time significantly.",
-      "Our self tapping screws are available in a wide range of drive types including Phillips, Slotted, Pozidriv, Hex, and Torx, allowing compatibility with virtually all assembly tool configurations. The precision-formed thread profile ensures repeatable clamping force and vibration resistance.",
-      "With over four decades of manufacturing experience, Tecknoforged produces self tapping screws in bulk quantities with consistent thread quality, dimensional accuracy, and surface coating uniformity verified by in-house CMM inspection.",
-    ],
-    applications: [
-      "Automotive body panels and interior assemblies",
-      "Electrical enclosures and switchgear",
-      "HVAC ductwork and sheet metal fabrication",
-      "Consumer electronics and appliance assembly",
-      "General light engineering and fabrication",
-    ],
-    specifications: {
-      material: "Steel, Stainless Steel 304, Stainless Steel 316, Brass",
-      grades: "4.6, 8.8, 10.9",
-      sizes: "M3 to M14 (custom sizes available)",
-      threadTypes: "Metric, AB, B, Type 25",
-      coatings:
-        "Zinc plated, Hot DIP galvanized, Black oxide, Plain, Nickel plated",
-      standards: "DIN 7971, DIN 7972, ISO 1481, ISO 1483, ANSI B18.6.4",
-    },
-    moq: "Minimum order 5,000 pieces. Standard lead time 10–15 working days for stocked items. Custom specifications 21–28 days. Bulk orders up to 5 million pieces/month.",
-  },
-  {
     slug: "self-drilling-screws",
     name: "Self Drilling Screws",
     shortSpec: "Tek point, M4–M12",
-    image: "/assets/generated/screw-self-drilling.dim_600x600.jpg",
+    image: "/assets/uploads/item-phil-flat-sds-blk__54303-1-1.jpg",
     category: "Screws",
     description: [
       "Tecknoforged self drilling screws (Tek screws) incorporate a precision-drilled point that eliminates pre-drilling operations entirely, providing a complete drill-tap-fasten action in a single pass. Engineered for structural steel, roofing, cladding and light-gauge metal applications.",
@@ -195,7 +166,7 @@ export const products: Product[] = [
     slug: "bt-cut-screws",
     name: "BT Cut Screws",
     shortSpec: "Thread cutting, M4–M12",
-    image: "/assets/generated/screw-self-tapping.dim_600x600.jpg",
+    image: "/assets/uploads/product-jpeg-4.jpg",
     category: "Screws",
     description: [
       "Tecknoforged BT Cut Screws are thread-cutting fasteners designed specifically for plastics, die-cast metals, and soft alloys where conventional self-tapping screws may not provide adequate pull-out strength. The specialized thread form cuts rather than displaces material, minimizing boss hoop stress and cracking.",
@@ -276,6 +247,35 @@ export const products: Product[] = [
     moq: "Minimum order 2,000 pieces for standard sizes. Stainless from 1,000 pieces.",
   },
   {
+    slug: "nyloc-nuts",
+    name: "Nylock Nuts",
+    shortSpec: "M3–M20, DIN 985/982",
+    image:
+      "/assets/uploads/nyloc-nut-m6_hub1092eb01ee6ec83a4e5197484c145c2_37704_1000x1000_resize_q85_box-1.jpg",
+    category: "Nuts",
+    description: [
+      "Tecknoforged Nylock Nuts (Nylon Insert Lock Nuts) are prevailing torque fasteners that incorporate a nylon insert collar which deforms around the bolt thread to create a permanent frictional locking action. Unlike conventional nuts, they resist loosening under vibration and dynamic loads without requiring separate locking elements.",
+      "The nylon insert is precision-moulded to maintain consistent interference fit across the bolt thread diameter range. The insert does not damage the bolt thread and allows removal and re-installation when required, providing a cost-effective reusable locking solution in demanding applications.",
+      "Manufactured to DIN 985 (thin type) and DIN 982 (standard type) dimensional standards, our Nyloc nuts are available in steel (zinc plated) and stainless steel grades suitable for environments from general engineering to marine and food-grade applications.",
+    ],
+    applications: [
+      "Automotive suspension and chassis assemblies",
+      "Industrial machinery subject to vibration and dynamic loads",
+      "Agricultural and construction equipment fastening",
+      "Electrical panel and switchgear assembly",
+      "General engineering requiring vibration-resistant joints",
+    ],
+    specifications: {
+      material: "Carbon Steel, Stainless Steel 304, Stainless Steel 316",
+      grades: "5, 8, 10 (steel); A2-70, A4-80 (stainless)",
+      sizes: "M3 to M20 (standard and fine pitch available)",
+      threadTypes: "Metric coarse (standard), Metric fine on request",
+      coatings: "Zinc plated, Hot DIP galvanized, Plain (stainless), Geomet",
+      standards: "DIN 985, DIN 982, ISO 7042, ANSI B18.16.6",
+    },
+    moq: "Minimum order 5,000 pieces for standard sizes. Stainless from 2,000 pieces. Custom sizes and fine pitch from 10,000 pieces.",
+  },
+  {
     slug: "flange-head-screws",
     name: "Flange Head Screws",
     shortSpec: "M4–M16, DIN 6921",
@@ -302,6 +302,91 @@ export const products: Product[] = [
       standards: "DIN 6921, ISO 15071, ANSI/ASME B18.2.1",
     },
     moq: "Minimum order 2,000 pieces. Serrated flange variant from 5,000 pieces. Custom flange OD from 10,000 pieces.",
+  },
+  {
+    slug: "pt-screws",
+    name: "PT Screws",
+    shortSpec: "Thread forming, M3–M10",
+    image: "/assets/uploads/VBT-PT-EJOT-PT-Pos1-500Wx500H-1-2.png",
+    category: "Screws",
+    description: [
+      "Tecknoforged PT Screws are high-performance thread-forming fasteners developed for direct assembly into thermoplastics and engineering polymers without pre-tapping. The unique PT thread profile forms a mating thread by displacing — not cutting — material, resulting in high pull-out strength and excellent vibration resistance.",
+      "The distinctive trilobular cross-section reduces driving torque while maximizing stripping torque margin, which is critical in automated assembly. The cold-forming action work-hardens the plastic thread walls, improving fatigue and creep resistance in service.",
+      "Manufactured to EJOT PT geometry specifications with controlled major diameter tolerances of ±0.03mm for consistency across automated assembly operations.",
+    ],
+    applications: [
+      "Engineering thermoplastic housings and enclosures",
+      "Consumer electronics and domestic appliances",
+      "Automotive interior plastic trim components",
+      "Medical device plastic housings",
+      "Electrical connector and junction box assembly",
+    ],
+    specifications: {
+      material: "Carbon Steel (case-hardened), Stainless Steel 304/410",
+      grades: "Case-hardened to Vickers 500–600 HV",
+      sizes: "M3 to M10, lengths 8mm to 60mm",
+      threadTypes: "PT trilobular thread-forming profile",
+      coatings: "Zinc plated, Black oxide, Nickel plated, Geomet",
+      standards: "EJOT PT standard, DIN 7500 (compatible), ISO 7085",
+    },
+    moq: "Minimum order 5,000 pieces. Custom lengths from 10,000 pieces. Stainless grade from 3,000 pieces.",
+  },
+  {
+    slug: "torx-screws",
+    name: "Torx Screws",
+    shortSpec: "Star drive, M3–M12",
+    image: "/assets/uploads/41n-VIBCdrL._AC_UF1000-1000_QL80_-1-1.jpg",
+    category: "Screws",
+    description: [
+      "Tecknoforged Torx Screws feature the 6-point star-shaped drive system (ISO 10664) that delivers superior torque transfer compared to Phillips or slotted drives. The drive geometry virtually eliminates cam-out, allowing higher installation torques and making these screws ideal for automated high-speed assembly.",
+      "The Torx drive transmits torque through vertical side walls rather than angled flanks, distributing load evenly across the six drive points and dramatically reducing wear on both the screw and driver bit. This extends tool life and reduces rework in high-volume production environments.",
+      "Available in countersunk, pan head, button head, and hex head variants with full or partial thread configurations across metric sizes.",
+    ],
+    applications: [
+      "Automotive interior and exterior trim assembly",
+      "Electronics and electrical equipment manufacturing",
+      "Precision instruments requiring cam-out-free installation",
+      "Appliance and white goods production lines",
+      "Structural and cladding applications requiring high-torque driving",
+    ],
+    specifications: {
+      material: "Carbon Steel, Alloy Steel, Stainless Steel 304/316",
+      grades: "4.8, 8.8, 10.9 (steel); A2-70, A4-80 (stainless)",
+      sizes: "M3 to M12, lengths 6mm to 100mm",
+      threadTypes: "Metric coarse; also available in metric fine",
+      coatings:
+        "Zinc plated, Black oxide, Stainless passivated, Geomet, Dacromet",
+      standards: "ISO 10664, DIN 912 (Torx), ISO 7380 (Torx button head)",
+    },
+    moq: "Minimum order 2,000 pieces for standard sizes. Stainless from 1,000 pieces. Custom head forms from 10,000 pieces.",
+  },
+  {
+    slug: "taptite-screws",
+    name: "Taptite Screws",
+    shortSpec: "Thread rolling, M3–M10",
+    image: "/assets/uploads/4943e27c833539659ab8221f61096f4d.thumb-2-1.webp",
+    category: "Screws",
+    description: [
+      "Tecknoforged Taptite Screws are thread-rolling fasteners that form a mating thread in pre-drilled holes by cold-displacing the base material rather than cutting it. This produces a stronger, work-hardened thread with superior pull-out and strip-out resistance compared to thread-cutting alternatives.",
+      "The trilobular cross-section of Taptite screws reduces driving torque while maximizing the stripping torque margin — a critical requirement for automated assembly. The cold-formed thread walls exhibit improved fatigue strength and resist loosening under dynamic and vibratory service conditions.",
+      "Particularly effective in ferrous and non-ferrous metals including mild steel, aluminum, zinc die-cast, and brass. Available with pan head, countersunk, and button head forms with Phillips, Torx, and hex socket drive options.",
+    ],
+    applications: [
+      "Sheet metal enclosures and electrical panels",
+      "Automotive body and trim assembly",
+      "Zinc die-cast and aluminum housings",
+      "Consumer electronics and appliance manufacturing",
+      "Industrial equipment panels and covers",
+    ],
+    specifications: {
+      material: "Carbon Steel (case-hardened), Stainless Steel 304/410",
+      grades: "Case-hardened to Vickers 450–550 HV",
+      sizes: "M3 to M10, lengths 8mm to 60mm",
+      threadTypes: "Taptite trilobular thread-rolling profile",
+      coatings: "Zinc plated, Black oxide, Nickel plated, Geomet",
+      standards: "Reminc Taptite standard, DIN 7500-1, ISO 7085",
+    },
+    moq: "Minimum order 5,000 pieces. Custom lengths from 10,000 pieces. Stainless grade from 3,000 pieces.",
   },
 ];
 

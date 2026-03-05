@@ -48,7 +48,6 @@ const industries = [
       "allen-cap-screws",
       "hex-flange-bolts",
       "flange-head-screws",
-      "self-tapping-screws",
     ],
   },
   {
@@ -66,12 +65,7 @@ const industries = [
       "Cable tray and cable management systems",
       "Control panel and DIN rail mounting hardware",
     ],
-    recommendedProducts: [
-      "allen-cap-screws",
-      "self-tapping-screws",
-      "bt-cut-screws",
-      "washers",
-    ],
+    recommendedProducts: ["allen-cap-screws", "bt-cut-screws", "washers"],
   },
   {
     icon: Cpu,
@@ -92,7 +86,6 @@ const industries = [
       "button-head-screws",
       "hi-low-screws",
       "bt-cut-screws",
-      "self-tapping-screws",
     ],
   },
   {

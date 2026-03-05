@@ -17,6 +17,10 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import ScrewPreview3D, {
+  type Finish,
+  type ScrewType,
+} from "../components/ScrewPreview3D";
 import { products } from "../data/products";
 import { useBackend } from "../hooks/useBackend";
 
@@ -72,6 +76,63 @@ function FadeInSection({
     >
       {children}
     </motion.div>
+  );
+}
+
+// ── 3D Product Card ────────────────────────────────────────────
+interface Product3DCardProps {
+  label: string;
+  screwType: ScrewType;
+  finish: Finish;
+  index: number;
+}
+
+function Product3DCard({
+  label,
+  screwType,
+  finish,
+  index,
+}: Product3DCardProps) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <FadeInSection delay={index * 0.07}>
+      <div
+        className="group relative flex flex-col rounded-xl overflow-hidden border border-white/8 bg-[#0d1b2e] hover:border-red-600/40 transition-all duration-300 hover:shadow-lg hover:shadow-red-600/10"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        data-ocid={`showcase.item.${index + 1}`}
+      >
+        {/* 3D badge */}
+        <div className="absolute top-2 right-2 z-10 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide">
+          3D
+        </div>
+
+        {/* 3D Canvas */}
+        <div className="relative aspect-square bg-[#0a1525]">
+          <ScrewPreview3D
+            screwType={screwType}
+            finish={finish}
+            interactive={hovered}
+            className="w-full h-full"
+          />
+        </div>
+
+        {/* Label + link */}
+        <div className="p-3 flex items-center justify-between">
+          <span className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">
+            {label}
+          </span>
+          <Link
+            to="/configurator"
+            search={{ type: screwType }}
+            className="text-[11px] font-semibold text-red-400/70 group-hover:text-red-400 flex items-center gap-0.5 transition-colors"
+          >
+            View <ChevronRight size={11} />
+          </Link>
+        </div>
+      </div>
+    </FadeInSection>
   );
 }
 
@@ -189,81 +250,164 @@ export default function HomePage() {
     },
   ];
 
+  const showcase3D: { label: string; screwType: ScrewType; finish: Finish }[] =
+    [
+      { label: "Allen Cap", screwType: "allen-cap", finish: "stainless" },
+      { label: "Button Head", screwType: "button-head", finish: "stainless" },
+      { label: "Torx", screwType: "torx", finish: "black-oxide" },
+      {
+        label: "Self Drilling",
+        screwType: "self-drilling",
+        finish: "zinc-plated",
+      },
+      { label: "PT Screw", screwType: "pt-screw", finish: "stainless" },
+      { label: "Taptite", screwType: "taptite", finish: "nickel-plated" },
+    ];
+
   return (
     <main>
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
-        {/* Background image */}
+      {/* ── HERO (dark industrial) ─────────────────────────────── */}
+      <section
+        className="relative min-h-screen flex items-center overflow-hidden"
+        style={{ background: "#070c16" }}
+      >
+        {/* Industrial grid overlay */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage:
-              "url(/assets/generated/hero-ai-manufacturing.dim_1600x900.jpg)",
+              "repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 60px),repeating-linear-gradient(90deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 60px)",
           }}
         />
-        {/* White overlay — fades from opaque white on the left to transparent on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/40" />
+        {/* Radial red glow on right */}
+        <div
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(220,38,38,0.12) 0%, transparent 70%)",
+          }}
+        />
 
-        <div className="relative container-brand pt-28 pb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 border border-red-600/30 bg-red-50 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
-              ISO Certified Manufacturer Since 1976
-            </div>
-
-            {/* H1 */}
-            <h1 className="heading-xl text-gray-900 mb-5 max-w-3xl">
-              Tecknoforged. <span className="text-red-600">Engineered for</span>{" "}
-              Industrial Strength.
-            </h1>
-
-            {/* Subheadline */}
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl leading-relaxed font-light">
-              India's trusted bulk fastener manufacturer supplying OEM-grade
-              screws, bolts, rivets & washers to automobile, electrical and
-              electronics industries. Mumbai-based. Export-ready.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mb-10">
-              <a
-                href="tel:+919870090508"
-                className="btn-outline-red text-base px-7 py-3.5"
+        <div className="relative w-full container-brand pt-28 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-8 items-center">
+            {/* LEFT — 60% */}
+            <div className="lg:col-span-3 flex flex-col gap-6">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
-                <Phone size={18} />
-                Call: +91 9870090508
-              </a>
-              <Link to="/products" className="btn-red text-base px-7 py-3.5">
-                View Products
-                <ChevronRight size={18} />
-              </Link>
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 border border-red-600/30 bg-red-600/10 text-red-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 tracking-wide">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                  ISO Certified · Since 1976
+                </div>
+
+                {/* H1 */}
+                <h1 className="font-bold tracking-tight text-white mb-2 leading-none">
+                  <span
+                    className="block font-extrabold tracking-[0.04em]"
+                    style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
+                  >
+                    TECKNOFORGED
+                  </span>
+                  <span
+                    className="block text-white/50 font-medium tracking-widest uppercase"
+                    style={{ fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)" }}
+                  >
+                    Screw Mfg Co.
+                  </span>
+                </h1>
+
+                {/* Divider */}
+                <div className="w-16 h-0.5 bg-red-600 my-5" />
+
+                {/* Subtext */}
+                <p className="text-white/60 text-lg leading-relaxed mb-8 max-w-lg">
+                  Precision screws M3–M10. Engineered for OEMs and industrial
+                  manufacturers.
+                </p>
+
+                {/* CTA Row */}
+                <div className="flex flex-wrap gap-3 mb-10">
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-lg shadow-red-600/25 text-sm"
+                    data-ocid="hero.primary_button"
+                  >
+                    Request Quote
+                    <ChevronRight size={16} />
+                  </Link>
+                  <Link
+                    to="/configurator"
+                    className="inline-flex items-center gap-2 border border-red-600/60 bg-red-600/10 text-red-400 hover:bg-red-600/20 hover:text-red-300 font-bold px-6 py-3 rounded-lg transition-all text-sm"
+                    data-ocid="hero.configurator.primary_button"
+                  >
+                    Configure Screw in 3D
+                    <ChevronRight size={16} />
+                  </Link>
+                  <Link
+                    to="/products"
+                    className="inline-flex items-center gap-2 border border-white/15 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white font-semibold px-6 py-3 rounded-lg transition-all text-sm"
+                    data-ocid="hero.products.secondary_button"
+                  >
+                    Explore Products
+                  </Link>
+                </div>
+
+                {/* Trust row */}
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-semibold tracking-widest uppercase text-white/30">
+                  {[
+                    "ISO Certified",
+                    "M3–M10",
+                    "OEM Supplier",
+                    "Export Ready",
+                  ].map((item, i) => (
+                    <span key={item} className="flex items-center gap-3">
+                      {i > 0 && <span className="text-white/15">|</span>}
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
             </div>
 
-            {/* Trust row */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold tracking-widest uppercase text-gray-400">
-              {[
-                "ISO Certified",
-                "Since 1976",
-                "OEM Supplier",
-                "Export Ready",
-                "Grade 8.8 / 10.9",
-              ].map((item, i) => (
-                <span key={item} className="flex items-center gap-3">
-                  {i > 0 && <span className="text-gray-300">|</span>}
-                  {item}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+            {/* RIGHT — 40%: 3D Screw */}
+            <motion.div
+              className="lg:col-span-2 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.9,
+                delay: 0.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <div
+                className="w-full rounded-2xl overflow-hidden border border-white/8 bg-[#0d1b2e] shadow-2xl shadow-black/60"
+                style={{
+                  height: "min(600px, 70vw)",
+                  minHeight: "400px",
+                }}
+              >
+                <ScrewPreview3D
+                  screwType="allen-cap"
+                  finish="stainless"
+                  interactive={false}
+                  className="w-full h-full"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white/80 to-transparent" />
+        {/* Bottom fade into stats bar */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, transparent, #0f172a)",
+          }}
+        />
       </section>
 
       {/* ── STATS BAR ─────────────────────────────────────────── */}
@@ -293,6 +437,50 @@ export default function HomePage() {
               </div>
             </FadeInSection>
           </div>
+        </div>
+      </section>
+
+      {/* ── 3D PRODUCT SHOWCASE ───────────────────────────────── */}
+      <section className="py-16 md:py-20" style={{ background: "#0a1020" }}>
+        <div className="container-brand">
+          <FadeInSection>
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 border border-red-600/30 bg-red-600/10 text-red-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-4 tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                Interactive 3D Models
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
+                3D Product Showcase
+              </h2>
+              <p className="text-white/45 max-w-md mx-auto text-sm leading-relaxed">
+                Hover any product to interact with the 3D model
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {showcase3D.map((item, i) => (
+              <Product3DCard
+                key={item.screwType}
+                label={item.label}
+                screwType={item.screwType}
+                finish={item.finish}
+                index={i}
+              />
+            ))}
+          </div>
+
+          <FadeInSection delay={0.3}>
+            <div className="text-center mt-10">
+              <Link
+                to="/configurator"
+                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-red-600/30 text-base"
+                data-ocid="showcase.configurator.primary_button"
+              >
+                Open Full 3D Configurator →
+              </Link>
+            </div>
+          </FadeInSection>
         </div>
       </section>
 
@@ -347,7 +535,11 @@ export default function HomePage() {
 
           <FadeInSection delay={0.2}>
             <div className="text-center mt-10">
-              <Link to="/products" className="btn-orange">
+              <Link
+                to="/products"
+                className="btn-orange"
+                data-ocid="products.primary_button"
+              >
                 View All Products
                 <ChevronRight size={16} />
               </Link>
@@ -458,6 +650,7 @@ export default function HomePage() {
               <Link
                 to="/contact"
                 className="btn-orange px-8 py-3.5 text-base shadow-orange"
+                data-ocid="cta.contact.primary_button"
               >
                 Contact Our Team
                 <ChevronRight size={18} />
@@ -536,7 +729,10 @@ export default function HomePage() {
             </h3>
 
             {submitted ? (
-              <div className="bg-green-50 border border-green-200 rounded p-5 text-green-800">
+              <div
+                className="bg-green-50 border border-green-200 rounded p-5 text-green-800"
+                data-ocid="contact.success_state"
+              >
                 <p className="font-semibold mb-1">Message sent successfully!</p>
                 <p className="text-sm">
                   Our team will contact you within 24 business hours.
@@ -564,6 +760,7 @@ export default function HomePage() {
                       setContactForm((p) => ({ ...p, name: e.target.value }))
                     }
                     className="w-full border border-border rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                    data-ocid="contact.input"
                   />
                 </div>
                 <div>
@@ -583,6 +780,7 @@ export default function HomePage() {
                       setContactForm((p) => ({ ...p, phone: e.target.value }))
                     }
                     className="w-full border border-border rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                    data-ocid="contact.input"
                   />
                 </div>
                 <div>
@@ -599,18 +797,28 @@ export default function HomePage() {
                     placeholder="Tell us about your requirement..."
                     value={contactForm.message}
                     onChange={(e) =>
-                      setContactForm((p) => ({ ...p, message: e.target.value }))
+                      setContactForm((p) => ({
+                        ...p,
+                        message: e.target.value,
+                      }))
                     }
                     className="w-full border border-border rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition resize-none"
+                    data-ocid="contact.textarea"
                   />
                 </div>
                 {submitError && (
-                  <p className="text-red-600 text-sm">{submitError}</p>
+                  <p
+                    className="text-red-600 text-sm"
+                    data-ocid="contact.error_state"
+                  >
+                    {submitError}
+                  </p>
                 )}
                 <button
                   type="submit"
                   disabled={submitting}
                   className="btn-orange w-full justify-center py-3 disabled:opacity-60 disabled:cursor-not-allowed"
+                  data-ocid="contact.submit_button"
                 >
                   {submitting ? (
                     <>

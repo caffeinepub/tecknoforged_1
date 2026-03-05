@@ -20,6 +20,7 @@ import IndustriesPage from "./pages/IndustriesPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ProductsPage from "./pages/ProductsPage";
 import QualityPage from "./pages/QualityPage";
+import ScrewConfiguratorPage from "./pages/ScrewConfiguratorPage";
 
 function RootLayout() {
   return (
@@ -93,6 +94,12 @@ const contactRoute = createRoute({
   component: ContactPage,
 });
 
+const configuratorRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/configurator",
+  component: ScrewConfiguratorPage,
+});
+
 const notFoundRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "*",
@@ -109,6 +116,7 @@ const routeTree = rootRoute.addChildren([
   exportsRoute,
   blogRoute,
   contactRoute,
+  configuratorRoute,
   notFoundRoute,
 ]);
 

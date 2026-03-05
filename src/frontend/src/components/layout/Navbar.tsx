@@ -39,6 +39,7 @@ export default function Navbar() {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Products", href: "/products", hasDropdown: true },
+    { label: "Configurator", href: "/configurator" },
     { label: "Industries", href: "/industries" },
     { label: "Quality", href: "/quality" },
     { label: "Exports", href: "/exports" },
@@ -64,14 +65,22 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center group"
+            className="flex items-center gap-3 group"
             aria-label="Tecknoforged Home"
           >
             <img
               src="/assets/uploads/ChatGPT-Image-Mar-2-2026-03_39_03-PM-1.png"
-              alt="Tecknoforged"
-              className="h-14 lg:h-16 w-auto object-contain"
+              alt="Tecknoforged logo"
+              className="h-12 lg:h-14 w-auto object-contain flex-shrink-0"
             />
+            <div className="flex flex-col leading-tight">
+              <span className="text-white font-bold text-lg lg:text-xl tracking-wide">
+                TECKNOFORGED
+              </span>
+              <span className="text-white/45 text-[10px] font-medium tracking-widest uppercase">
+                Precision Fastener Manufacturers
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -122,6 +131,19 @@ export default function Navbar() {
                     </div>
                   )}
                 </div>
+              ) : link.href === "/configurator" ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`px-3 py-1 text-sm font-semibold rounded-full border transition-colors ${
+                    isActive(link.href)
+                      ? "bg-red-600/20 border-red-500/60 text-red-300"
+                      : "text-red-400 border-red-600/30 bg-red-600/10 hover:bg-red-600/20"
+                  }`}
+                  data-ocid="nav.configurator.link"
+                >
+                  {link.label}
+                </Link>
               ) : (
                 <Link
                   key={link.href}
