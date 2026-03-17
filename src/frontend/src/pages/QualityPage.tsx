@@ -1,354 +1,169 @@
 import { Link } from "@tanstack/react-router";
 import {
   Award,
-  CheckCircle,
+  BadgeCheck,
+  ChevronRight,
   ClipboardCheck,
-  FlaskConical,
-  Microscope,
-  Scan,
+  FileCheck,
+  Gauge,
   Shield,
 } from "lucide-react";
-import { motion, useInView } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useInView } from "../hooks/useInView";
 
-function FadeIn({
+function AnimSection({
   children,
   delay = 0,
   className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+}: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, inView } = useInView();
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`fade-in-up ${inView ? "in-view" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-const processSteps = [
-  {
-    step: "01",
-    icon: Microscope,
-    title: "Raw Material Inspection",
-    desc: "Every incoming batch of steel rod, wire, or coil is tested for chemical composition using spectrometry and hardness testing before entering production. Heat numbers are recorded for full traceability.",
-    details: [
-      "Chemical composition analysis",
-      "Hardness testing (Rockwell/Brinell)",
-      "Dimensional verification of rod/wire",
-      "Supplier certification review",
-      "Batch quarantine until approved",
-    ],
-  },
-  {
-    step: "02",
-    icon: Scan,
-    title: "In-Process Quality Control",
-    desc: "During cold forging, thread rolling, and heat treatment, dimensional checks and thread gauging are performed at regular intervals to maintain process capability within specification.",
-    details: [
-      "Go/No-Go gauge inspection",
-      "Thread pitch diameter measurement",
-      "Head dimensions and drive cavity check",
-      "Case hardness monitoring",
-      "In-process rejection and rework process",
-    ],
-  },
-  {
-    step: "03",
-    icon: FlaskConical,
-    title: "Tensile & Torque Testing",
-    desc: "Finished fasteners are subjected to tensile load testing on a calibrated Universal Testing Machine to verify proof load, yield strength, and ultimate tensile strength per ISO 898-1 requirements.",
-    details: [
-      "Proof load testing per ISO/DIN",
-      "Ultimate tensile strength measurement",
-      "Break torque and prevailing torque tests",
-      "Charpy impact testing (for low-temperature grades)",
-      "Results recorded with calibration traceability",
-    ],
-  },
-  {
-    step: "04",
-    icon: Shield,
-    title: "Surface Finish Inspection",
-    desc: "Coating thickness is measured using X-ray fluorescence and magnetic induction methods. Visual inspection under controlled lighting identifies surface defects, plating uniformity, and appearance.",
-    details: [
-      "Zinc coating thickness by XRF",
-      "Salt spray testing (neutral salt, ASTM B117)",
-      "Visual inspection for burrs, cracks, voids",
-      "Adhesion testing for coated fasteners",
-      "Color and gloss measurement for appearance-critical parts",
-    ],
-  },
-  {
-    step: "05",
-    icon: ClipboardCheck,
-    title: "Final Batch Certification",
-    desc: "Before dispatch, every batch receives a test certificate documenting dimensional, mechanical, and surface inspection results. Certificates include traceability to raw material heat numbers.",
-    details: [
-      "Dimensional inspection report",
-      "Mechanical test certificate (UTM data)",
-      "Surface treatment certificate",
-      "Packing and labeling verification",
-      "Customer-specific documentation prepared",
-    ],
-  },
-];
-
 const standards = [
   {
-    code: "ISO 898-1",
-    desc: "Mechanical properties of fasteners — bolts, screws, studs",
+    code: "ISO 9001:2015",
+    desc: "International quality management system standard. Governs our entire production, supplier qualification, and corrective action process.",
   },
   {
-    code: "ISO 4759",
-    desc: "Tolerances for fasteners — product grades A, B, C",
+    code: "DIN Standards",
+    desc: "German industrial norms for fastener geometry, thread form, mechanical properties, and surface treatment — the global benchmark for precision fasteners.",
   },
   {
-    code: "DIN 931/932",
-    desc: "Hexagon head bolts and screws — partial and full thread",
+    code: "JIS B 1176/1194",
+    desc: "Japanese Industrial Standard for hex socket head screws and button head screws, widely specified by Japanese OEM manufacturers.",
   },
-  { code: "DIN 933", desc: "Hexagon head screws — full thread" },
   {
     code: "ASTM F3125",
-    desc: "Standard specification for high-strength structural bolts",
+    desc: "American standard for structural bolts. Applicable to our high-strength hex head and flange bolt production.",
   },
-  { code: "ISO 3506", desc: "Corrosion-resistant stainless steel fasteners" },
 ];
 
-const equipment = [
-  "Universal Testing Machine (100kN capacity)",
-  "Coordinate Measuring Machine (CMM)",
-  "Thread gauges — Go/No-Go sets to DIN 13",
-  "Rockwell and Vickers hardness testers",
-  "Salt spray test chamber (ASTM B117)",
-  "XRF coating thickness analyser",
-  "Optical comparator (50× to 200×)",
-  "Torque measurement equipment",
-];
-
-const certifications = [
-  { cert: "ISO 9001:2015", issuer: "Quality Management System" },
-  { cert: "BIS Certification", issuer: "Bureau of Indian Standards" },
-  { cert: "RoHS Compliant", issuer: "Restriction of Hazardous Substances" },
-  { cert: "Export Quality Approval", issuer: "ECGC Approved Supplier" },
+const tests = [
+  {
+    icon: Gauge,
+    label: "Thread Gauge Inspection",
+    desc: "Go/no-go thread gauges verify pitch diameter and form conformance on every production batch before release.",
+  },
+  {
+    icon: ClipboardCheck,
+    label: "Dimensional Verification",
+    desc: "CMM and optical comparator measurement of head dimensions, socket depth, thread length, and shank diameter.",
+  },
+  {
+    icon: Shield,
+    label: "Hardness Testing",
+    desc: "Rockwell HRB/HRC and Vickers HV testing to verify heat treatment meets grade mechanical property requirements.",
+  },
+  {
+    icon: FileCheck,
+    label: "Material Certification",
+    desc: "Mill test reports with chemical composition and mechanical property data supplied with every consignment.",
+  },
+  {
+    icon: BadgeCheck,
+    label: "Surface Finish",
+    desc: "Salt spray testing (ASTM B117) to validate coating performance, thickness measurement by XRF, and visual inspection.",
+  },
+  {
+    icon: Award,
+    label: "Batch Traceability",
+    desc: "Every production batch carries a unique identifier linking finished goods to raw material, process records, and test results.",
+  },
 ];
 
 export default function QualityPage() {
   useEffect(() => {
-    document.title =
-      "Quality Assurance | ISO-Certified Fastener Manufacturing | Tecknoforged";
+    document.title = "Quality | Tecknoforged Screw Mfg Co.";
   }, []);
 
   return (
-    <main className="pt-16">
-      {/* Hero */}
-      <section className="relative bg-navy py-20 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1600&q=80)",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628] to-[#1E3A5F]/60" />
-        <div className="relative container-brand">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-label text-orange-400 mb-3">Quality Assurance</p>
-            <h1 className="heading-xl text-white mb-4">
-              ISO-Driven Quality
-              <br />
-              at Every Stage
-            </h1>
-            <p className="text-blue-200/70 max-w-2xl font-light text-lg leading-relaxed">
-              From raw material receipt to final dispatch, every fastener batch
-              undergoes rigorous testing and documentation under our ISO
-              9001:2015 quality system.
-            </p>
-            <div className="flex flex-wrap gap-4 mt-8">
-              {[
-                "ISO 9001:2015",
-                "BIS Certified",
-                "RoHS Compliant",
-                "Export Approved",
-              ].map((cert) => (
-                <span
-                  key={cert}
-                  className="flex items-center gap-1.5 bg-orange-500/15 border border-orange-500/30 text-orange-300 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"
-                >
-                  <CheckCircle size={12} />
-                  {cert}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+    <main className="pt-16 min-h-screen bg-[#111111]">
+      <div className="bg-[#0d0d0d] border-b border-[#1e1e1e] py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <span className="section-label">Quality Assurance</span>
+          <h1 className="section-title text-white mb-3">Standards & Testing</h1>
+          <p className="text-sm text-[#666] max-w-2xl">
+            Every Tecknoforged fastener is produced and inspected under a
+            rigorous quality system. We do not ship components that do not
+            conform to specification.
+          </p>
         </div>
-      </section>
+      </div>
 
-      {/* Quality Process */}
-      <section className="section-padding bg-white">
-        <div className="container-brand">
-          <FadeIn>
-            <div className="text-center mb-14">
-              <p className="text-label text-orange-600 mb-2">Our Process</p>
-              <h2 className="heading-lg text-navy mb-3">
-                5-Stage Quality Process
-              </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                Every batch traceable from raw material to customer receipt
-              </p>
-            </div>
-          </FadeIn>
-
-          <div className="flex flex-col gap-8">
-            {processSteps.map((step, i) => (
-              <FadeIn key={step.step} delay={i * 0.08}>
-                <div className="flex flex-col md:flex-row gap-6 p-6 bg-light-brand border border-border rounded hover:shadow-md transition-shadow">
-                  {/* Step number + icon */}
-                  <div className="flex flex-row md:flex-col items-center md:items-start gap-3 md:w-20 flex-shrink-0">
-                    <div className="text-4xl font-display font-extrabold text-orange-500/30 leading-none">
-                      {step.step}
-                    </div>
-                    <div className="w-10 h-10 bg-navy rounded flex items-center justify-center">
-                      <step.icon size={18} className="text-orange-400" />
-                    </div>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h3 className="font-bold text-navy text-lg mb-2">
-                      {step.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {step.desc}
-                    </p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                      {step.details.map((d) => (
-                        <li
-                          key={d}
-                          className="flex items-start gap-2 text-xs text-muted-foreground"
-                        >
-                          <CheckCircle
-                            size={12}
-                            className="text-orange-500 flex-shrink-0 mt-0.5"
-                          />
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Standards + Equipment */}
-      <section className="section-padding bg-light-brand">
-        <div className="container-brand">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* Standards */}
-            <FadeIn>
-              <h2 className="heading-md text-navy mb-6 flex items-center gap-2">
-                <Award size={22} className="text-orange-500" />
-                Standards Compliance
-              </h2>
-              <div className="flex flex-col gap-3">
-                {standards.map((s) => (
-                  <div
-                    key={s.code}
-                    className="flex gap-4 p-4 bg-white border border-border rounded"
-                  >
-                    <div className="font-mono font-bold text-orange-600 text-sm w-28 flex-shrink-0">
-                      {s.code}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {s.desc}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-
-            {/* Equipment */}
-            <FadeIn delay={0.1}>
-              <h2 className="heading-md text-navy mb-6 flex items-center gap-2">
-                <FlaskConical size={22} className="text-orange-500" />
-                Testing Equipment
-              </h2>
-              <div className="bg-white border border-border rounded p-5">
-                <ul className="flex flex-col gap-3">
-                  {equipment.map((eq, i) => (
-                    <li key={eq} className="flex items-center gap-3 text-sm">
-                      <span className="w-6 h-6 bg-navy rounded text-orange-400 text-xs font-bold flex items-center justify-center flex-shrink-0">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-muted-foreground">{eq}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications */}
-      <section className="section-padding bg-white">
-        <div className="container-brand">
-          <FadeIn>
-            <div className="text-center mb-10">
-              <p className="text-label text-orange-600 mb-2">Certifications</p>
-              <h2 className="heading-lg text-navy">
-                Our Quality Certifications
-              </h2>
-            </div>
-          </FadeIn>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {certifications.map((c, i) => (
-              <FadeIn key={c.cert} delay={i * 0.1}>
-                <div className="text-center p-6 border-2 border-orange-200 rounded bg-orange-50 hover:border-orange-400 transition-colors">
-                  <Shield size={32} className="text-orange-500 mx-auto mb-3" />
-                  <div className="font-bold text-navy text-base mb-1">
-                    {c.cert}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {c.issuer}
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-navy py-12">
-        <div className="container-brand text-center">
-          <FadeIn>
-            <h2 className="heading-md text-white mb-4">
-              Request Quality Documentation for Your Order
+      {/* Standards */}
+      <section className="bg-[#f5f5f5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <AnimSection className="mb-10">
+            <span className="section-label">Conformance</span>
+            <h2 className="section-title text-[#111]">
+              Standards We Manufacture To
             </h2>
-            <p className="text-blue-200/60 mb-6 text-sm max-w-xl mx-auto">
-              All orders include full test certificates, dimensional reports,
-              and material traceability documentation.
-            </p>
-            <Link to="/contact" className="btn-orange">
-              Submit RFQ
+            <div
+              className="industrial-divider mt-4"
+              style={{ background: "#D32F2F" }}
+            />
+          </AnimSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {standards.map((s, i) => (
+              <AnimSection key={s.code} delay={i * 100}>
+                <div className="bg-white border border-[#e5e5e5] border-l-4 border-l-[#D32F2F] p-6">
+                  <h3 className="text-base font-black text-[#111] tracking-tight mb-2">
+                    {s.code}
+                  </h3>
+                  <p className="text-sm text-[#666] leading-relaxed">
+                    {s.desc}
+                  </p>
+                </div>
+              </AnimSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tests */}
+      <section className="bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <AnimSection className="mb-10">
+            <span className="section-label">Inspection</span>
+            <h2 className="section-title text-white">Testing Processes</h2>
+            <div className="industrial-divider mt-4" />
+          </AnimSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {tests.map((test, i) => (
+              <AnimSection key={test.label} delay={i * 80}>
+                <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 hover:border-[#D32F2F] transition-colors duration-300">
+                  <div className="w-10 h-10 flex items-center justify-center bg-[#D32F2F]/10 border border-[#D32F2F]/20 mb-4">
+                    <test.icon className="w-5 h-5 text-[#D32F2F]" />
+                  </div>
+                  <h3 className="text-sm font-bold text-white tracking-tight mb-2">
+                    {test.label}
+                  </h3>
+                  <p className="text-xs text-[#666] leading-relaxed">
+                    {test.desc}
+                  </p>
+                </div>
+              </AnimSection>
+            ))}
+          </div>
+          <AnimSection delay={300} className="mt-10 text-center">
+            <Link
+              to="/contact"
+              className="btn-primary"
+              data-ocid="quality.primary_button"
+            >
+              Request Certification Docs
+              <ChevronRight className="w-3.5 h-3.5" />
             </Link>
-          </FadeIn>
+          </AnimSection>
         </div>
       </section>
     </main>

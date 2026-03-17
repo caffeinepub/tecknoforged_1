@@ -1,86 +1,48 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { ChevronDown, Menu, Phone, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { products } from "../../data/products";
+import { Link } from "@tanstack/react-router";
+import { ChevronRight, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const navLinks = [
+  { label: "Products", href: "/products" },
+  { label: "Manufacturing", href: "/about" },
+  { label: "Industries", href: "/industries" },
+  { label: "Quality", href: "/quality" },
+  { label: "Exports", href: "/exports" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [productDropdownOpen, setProductDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: close menus on route change
-  useEffect(() => {
-    setMobileOpen(false);
-    setProductDropdownOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setProductDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Products", href: "/products", hasDropdown: true },
-    { label: "Configurator", href: "/configurator" },
-    { label: "Industries", href: "/industries" },
-    { label: "Quality", href: "/quality" },
-    { label: "Exports", href: "/exports" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-  ];
-
-  const isActive = (href: string) => {
-    if (href === "/") return location.pathname === "/";
-    return location.pathname.startsWith(href);
-  };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#0A1628] shadow-xl border-b border-white/10"
-          : "bg-[#0A1628] border-b border-white/10"
+          ? "bg-[#0d0d0d] border-b border-[#222] shadow-lg"
+          : "bg-[#111111] border-b border-[#1e1e1e]"
       }`}
     >
-      <div className="container-brand">
-        <div className="flex items-center justify-between h-20 lg:h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3 group"
-            aria-label="Tecknoforged Home"
+            className="flex flex-col leading-none group"
+            data-ocid="nav.link"
           >
-            <img
-              src="/assets/uploads/ChatGPT-Image-Mar-2-2026-03_39_03-PM-1.png"
-              alt="Tecknoforged logo"
-              className="h-12 lg:h-14 w-auto object-contain flex-shrink-0"
-            />
-            <div className="flex flex-col leading-tight">
-              <span className="text-white font-bold text-lg lg:text-xl tracking-wide">
-                TECKNOFORGED
-              </span>
-              <span className="text-white/45 text-[10px] font-medium tracking-widest uppercase">
-                Precision Fastener Manufacturers
-              </span>
-            </div>
+            <span className="text-xl font-black tracking-tighter text-white group-hover:opacity-90 transition-opacity">
+              TECNK<span className="text-[#D32F2F]">F</span>ORGED
+            </span>
+            <span className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#666] mt-0.5">
+              Screw Mfg Co.
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -88,142 +50,76 @@ export default function Navbar() {
             className="hidden lg:flex items-center gap-1"
             aria-label="Main navigation"
           >
-            {navLinks.map((link) =>
-              link.hasDropdown ? (
-                <div key={link.href} className="relative" ref={dropdownRef}>
-                  <button
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded transition-colors ${
-                      isActive(link.href)
-                        ? "text-orange-400"
-                        : "text-white/80 hover:text-white"
-                    }`}
-                    onClick={() => setProductDropdownOpen(!productDropdownOpen)}
-                    aria-expanded={productDropdownOpen}
-                    aria-haspopup="true"
-                    type="button"
-                  >
-                    {link.label}
-                    <ChevronDown
-                      size={14}
-                      className={`transition-transform duration-200 ${productDropdownOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
-                  {productDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-1 w-72 bg-[#0A1628] border border-white/10 rounded shadow-xl py-2 z-50">
-                      <Link
-                        to="/products"
-                        className="flex items-center px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 font-medium"
-                      >
-                        All Products →
-                      </Link>
-                      <div className="h-px bg-white/10 mx-4 my-1" />
-                      {products.map((product) => (
-                        <Link
-                          key={product.slug}
-                          to="/products/$slug"
-                          params={{ slug: product.slug }}
-                          className="flex items-center px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 gap-2"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0" />
-                          {product.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : link.href === "/configurator" ? (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`px-3 py-1 text-sm font-semibold rounded-full border transition-colors ${
-                    isActive(link.href)
-                      ? "bg-red-600/20 border-red-500/60 text-red-300"
-                      : "text-red-400 border-red-600/30 bg-red-600/10 hover:bg-red-600/20"
-                  }`}
-                  data-ocid="nav.configurator.link"
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`px-3 py-2 text-sm font-medium rounded transition-colors ${
-                    isActive(link.href)
-                      ? "text-orange-400"
-                      : "text-white/80 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ),
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="px-3.5 py-2 text-[11px] font-semibold tracking-[0.12em] uppercase text-[#999] hover:text-white transition-colors duration-200 relative group"
+                activeProps={{
+                  className:
+                    "px-3.5 py-2 text-[11px] font-semibold tracking-[0.12em] uppercase text-white",
+                }}
+                data-ocid="nav.link"
+              >
+                {link.label}
+                <span className="absolute bottom-0 left-3.5 right-3.5 h-[1px] bg-[#D32F2F] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+              </Link>
+            ))}
           </nav>
 
-          {/* CTA + Mobile Toggle */}
-          <div className="flex items-center gap-3">
-            <a
-              href="tel:+919870090508"
-              className="hidden sm:flex items-center gap-1.5 text-white/70 hover:text-white text-sm transition-colors"
-              aria-label="Call us"
+          {/* CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Link
+              to="/contact"
+              className="btn-primary text-[11px] flex items-center gap-1.5"
+              data-ocid="nav.primary_button"
             >
-              <Phone size={14} />
-              <span className="hidden xl:inline">+91 9870090508</span>
-            </a>
-            <button
-              className="lg:hidden text-white p-2 rounded hover:bg-white/10 transition-colors"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-              type="button"
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+              Request Quote
+              <ChevronRight className="w-3 h-3" />
+            </Link>
           </div>
+
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            className="lg:hidden p-2 text-white"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            data-ocid="nav.toggle"
+          >
+            {menuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-[#0A1628] border-t border-white/10 pb-4 max-h-[80vh] overflow-y-auto">
-          <nav className="container-brand pt-2" aria-label="Mobile navigation">
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="lg:hidden bg-[#111111] border-t border-[#222]">
+          <nav className="px-4 py-4 space-y-1">
             {navLinks.map((link) => (
-              <div key={link.href}>
-                <Link
-                  to={link.href}
-                  className={`flex items-center py-3 text-base font-medium border-b border-white/5 transition-colors ${
-                    isActive(link.href)
-                      ? "text-orange-400"
-                      : "text-white/80 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-                {link.hasDropdown && (
-                  <div className="bg-white/5 ml-4 mb-2">
-                    {products.map((product) => (
-                      <Link
-                        key={product.slug}
-                        to="/products/$slug"
-                        params={{ slug: product.slug }}
-                        className="flex items-center py-2 px-3 text-sm text-white/60 hover:text-white gap-2"
-                      >
-                        <span className="w-1 h-1 rounded-full bg-orange-500" />
-                        {product.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="pt-4 flex flex-col gap-3">
-              <a
-                href="tel:+919870090508"
-                className="flex items-center justify-center gap-2 border border-white/30 text-white py-3 px-6 rounded hover:bg-white/10 transition-colors"
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-3 text-[11px] font-semibold tracking-[0.12em] uppercase text-[#999] hover:text-white hover:bg-[#1a1a1a] transition-colors rounded-sm"
+                data-ocid="nav.link"
               >
-                <Phone size={16} />
-                Call +91 9870090508
-              </a>
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-3 pb-1">
+              <Link
+                to="/contact"
+                onClick={() => setMenuOpen(false)}
+                className="btn-primary w-full justify-center"
+                data-ocid="nav.primary_button"
+              >
+                Request Quote
+              </Link>
             </div>
           </nav>
         </div>

@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark industrial theme — primary mode */
+    --background: 0.12 0 0;
+    --foreground: 1 0 0;
+
+    --card: 0.15 0 0;
+    --card-foreground: 1 0 0;
+
+    --popover: 0.15 0 0;
+    --popover-foreground: 1 0 0;
+
+    --primary: 0.47 0.19 27;
+    --primary-foreground: 1 0 0;
+
+    --secondary: 0.19 0 0;
+    --secondary-foreground: 1 0 0;
+
+    --muted: 0.19 0 0;
+    --muted-foreground: 0.65 0 0;
+
+    --accent: 0.47 0.19 27;
+    --accent-foreground: 1 0 0;
+
+    --destructive: 0.47 0.19 27;
+    --destructive-foreground: 1 0 0;
+
+    --border: 0.25 0 0;
+    --input: 0.19 0 0;
+    --ring: 0.47 0.19 27;
+
+    --radius: 0.125rem;
+
+    /* Brand tokens */
+    --brand-red: 0.47 0.19 27;
+    --brand-steel: 0.65 0.01 240;
+    --brand-surface: 0.15 0 0;
+    --brand-surface-2: 0.19 0 0;
+    --brand-dark: 0.09 0 0;
+    --brand-light-bg: 0.97 0 0;
+    --brand-light-text: 0.2 0 0;
+
+    --chart-1: 0.47 0.19 27;
+    --chart-2: 0.65 0.01 240;
+    --chart-3: 0.8 0 0;
+    --chart-4: 0.55 0.1 27;
+    --chart-5: 0.35 0.05 27;
+
+    --sidebar: 0.09 0 0;
+    --sidebar-foreground: 1 0 0;
+    --sidebar-primary: 0.47 0.19 27;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.19 0 0;
+    --sidebar-accent-foreground: 1 0 0;
+    --sidebar-border: 0.25 0 0;
+    --sidebar-ring: 0.47 0.19 27;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .fade-in.in-view {
+    opacity: 1;
+  }
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
+  .stagger-4 {
+    transition-delay: 0.4s;
+  }
+  .stagger-5 {
+    transition-delay: 0.5s;
+  }
+  .stagger-6 {
+    transition-delay: 0.6s;
+  }
+
+  .industrial-divider {
+    height: 3px;
+    width: 48px;
+    background: oklch(var(--brand-red));
+    display: block;
+  }
+
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s
+      ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    border-color: oklch(var(--brand-red)) !important;
+    box-shadow: 0 8px 32px -4px oklch(0.47 0.19 27 / 0.25);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: oklch(var(--brand-red));
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.125rem;
+    border: 1px solid oklch(var(--brand-red));
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    background: oklch(0.4 0.19 27);
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px oklch(0.47 0.19 27 / 0.4);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.125rem;
+    border: 1px solid #fff;
+    transition: background 0.2s ease, transform 0.15s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: oklch(var(--brand-red));
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+}

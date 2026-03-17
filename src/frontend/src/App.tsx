@@ -6,13 +6,10 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
-import { AnimatePresence } from "motion/react";
-import FloatingButtons from "./components/layout/FloatingButtons";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 
 import AboutPage from "./pages/AboutPage";
-import BlogPage from "./pages/BlogPage";
 import ContactPage from "./pages/ContactPage";
 import ExportsPage from "./pages/ExportsPage";
 import HomePage from "./pages/HomePage";
@@ -20,17 +17,13 @@ import IndustriesPage from "./pages/IndustriesPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ProductsPage from "./pages/ProductsPage";
 import QualityPage from "./pages/QualityPage";
-import ScrewConfiguratorPage from "./pages/ScrewConfiguratorPage";
 
 function RootLayout() {
   return (
     <>
       <Navbar />
-      <AnimatePresence mode="wait">
-        <Outlet />
-      </AnimatePresence>
+      <Outlet />
       <Footer />
-      <FloatingButtons />
       <Toaster />
     </>
   );
@@ -82,22 +75,10 @@ const exportsRoute = createRoute({
   component: ExportsPage,
 });
 
-const blogRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/blog",
-  component: BlogPage,
-});
-
 const contactRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/contact",
   component: ContactPage,
-});
-
-const configuratorRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/configurator",
-  component: ScrewConfiguratorPage,
 });
 
 const notFoundRoute = createRoute({
@@ -114,9 +95,7 @@ const routeTree = rootRoute.addChildren([
   industriesRoute,
   qualityRoute,
   exportsRoute,
-  blogRoute,
   contactRoute,
-  configuratorRoute,
   notFoundRoute,
 ]);
 
